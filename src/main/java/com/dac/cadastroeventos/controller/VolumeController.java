@@ -49,7 +49,7 @@ public class VolumeController {
     }
 
     @PutMapping("/alterar")
-    public ResponseEntity<Volume> alterarVolume(Volume volume) {
+    public ResponseEntity<Volume> alterarVolume(@RequestBody Volume volume) {
 
         Long id = volume.getId();
 

@@ -1,12 +1,16 @@
 package com.dac.cadastroeventos.controller;
 
+import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoRequestDTO;
+import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoResponseDTO;
 import com.dac.cadastroeventos.model.Artigo;
+import com.dac.cadastroeventos.model.Volume;
 import com.dac.cadastroeventos.service.ArtigoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -18,12 +22,18 @@ public class ArtigoController {
     private ArtigoService artigoService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Artigo> registrarArtigo(Artigo artigo) {
+    public ResponseEntity<RegistrarArtigoResponseDTO> registrarArtigo(@RequestBody RegistrarArtigoRequestDTO dto) {
 
-        Artigo novoArtigo = artigoService.criarArtigo(artigo);
+        RegistrarArtigoResponseDTO novoArtigo = artigoService.criarArtigoDTO(dto);
 
         return ResponseEntity.status(201).body(novoArtigo);
     }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Artigo>> listarArtigos() {
+        return ResponseEntity.status(200).body(artigoService.listaTodosArtigos());
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Artigo> buscarArtigo(@PathVariable Long id) {
