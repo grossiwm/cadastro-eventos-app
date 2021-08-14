@@ -24,4 +24,6 @@ public class RegistrarArtigoRequestDTO {
     private String palavrasChaveEn;
 
     private Integer numeroPaginas;
+
+    private Long volumeId;
 }

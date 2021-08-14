@@ -2,11 +2,11 @@ package com.dac.cadastroeventos.service;
 
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoRequestDTO;
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoResponseDTO;
-import com.dac.cadastroeventos.dto.volume.RegistrarVolumeRequestDTO;
-import com.dac.cadastroeventos.dto.volume.RegistrarVolumeResponseDTO;
+import com.dac.cadastroeventos.exception.VolumeNaoEncontradoException;
 import com.dac.cadastroeventos.model.Artigo;
 import com.dac.cadastroeventos.model.Volume;
 import com.dac.cadastroeventos.repository.ArtigoRepository;
+import com.dac.cadastroeventos.repository.VolumeRepository;
 import com.dac.cadastroeventos.utils.ClassesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,9 @@ public class ArtigoService {
     private ArtigoRepository artigoRepository;
 
     @Autowired
+    private VolumeRepository volumeRepository;
+
+    @Autowired
     private ClassesUtils classesUtils;
 
     public List<Artigo> listaTodosArtigos(){
@@ -31,10 +34,16 @@ public class ArtigoService {
         return artigoRepository.save(artigo);
     }
 
-    public RegistrarArtigoResponseDTO criarArtigoDTO(RegistrarArtigoRequestDTO dto) {
+    public RegistrarArtigoResponseDTO criarArtigoDTO(RegistrarArtigoRequestDTO dto) throws VolumeNaoEncontradoException {
+
+        Optional<Volume> volumeOp = volumeRepository.findById(dto.getVolumeId());
+
+        if (volumeOp.isEmpty())
+            throw new VolumeNaoEncontradoException();
 
         Artigo artigo = classesUtils.fazDePara(dto, new Artigo());
 
+        artigo.setVolume(volumeOp.get());
         this.criarArtigo(artigo);
 
         RegistrarArtigoResponseDTO responseDTO = new RegistrarArtigoResponseDTO();

@@ -1,5 +1,6 @@
 package com.dac.cadastroeventos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -51,6 +52,7 @@ public class Volume {
     @OneToMany(fetch=FetchType.LAZY)
     @JoinColumn(name="volume_id")
     @Setter
+    @JsonIgnore
     private List<Artigo> artigos;
 
     public List<Artigo> getArtigos() {

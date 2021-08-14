@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -46,6 +47,11 @@ public class VolumeController {
     @GetMapping("/{id}/artigos/listar")
     public ResponseEntity<List<Artigo>> listarArtigosPorVolume(@PathVariable Long id) {
         return ResponseEntity.status(200).body(volumeService.listaArtigosPorVolume(id));
+    }
+
+    @GetMapping("/{id}/autores/listar")
+    public ResponseEntity<List<Map<Object, Object>>> listarAutoresPorVolume(@PathVariable Long id) {
+        return ResponseEntity.status(200).body(volumeService.listaAutoresPorVolume(id));
     }
 
     @PutMapping("/alterar")

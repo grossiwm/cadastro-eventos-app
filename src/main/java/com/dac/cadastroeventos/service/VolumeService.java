@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,8 @@ public class VolumeService {
     public List<Artigo> listaArtigosPorVolume(Long id){
         return volumeRepository.buscaArtigosDeVolume(id);
     }
+
+    public List<Map<Object, Object>> listaAutoresPorVolume(Long id) { return volumeRepository.buscaAutoresDeVolume(id);}
 
     public Volume criarVolume(Volume volume) {
         return volumeRepository.save(volume);

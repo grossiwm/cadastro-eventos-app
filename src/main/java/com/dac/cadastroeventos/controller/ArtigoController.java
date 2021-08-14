@@ -2,8 +2,8 @@ package com.dac.cadastroeventos.controller;
 
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoRequestDTO;
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoResponseDTO;
+import com.dac.cadastroeventos.exception.VolumeNaoEncontradoException;
 import com.dac.cadastroeventos.model.Artigo;
-import com.dac.cadastroeventos.model.Volume;
 import com.dac.cadastroeventos.service.ArtigoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ public class ArtigoController {
     private ArtigoService artigoService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<RegistrarArtigoResponseDTO> registrarArtigo(@RequestBody RegistrarArtigoRequestDTO dto) {
+    public ResponseEntity<RegistrarArtigoResponseDTO> registrarArtigo(@RequestBody RegistrarArtigoRequestDTO dto) throws VolumeNaoEncontradoException {
 
         RegistrarArtigoResponseDTO novoArtigo = artigoService.criarArtigoDTO(dto);
 
@@ -46,7 +46,7 @@ public class ArtigoController {
     }
 
     @PutMapping("/alterar")
-    public ResponseEntity<Artigo> alterarArtigo(Artigo artigo) {
+    public ResponseEntity<Artigo> alterarArtigo(@RequestBody Artigo artigo) {
 
         Long id = artigo.getId();
 

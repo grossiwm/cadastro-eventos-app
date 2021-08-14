@@ -1,5 +1,6 @@
 package com.dac.cadastroeventos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -64,11 +65,13 @@ public class Artigo {
     @Getter
     @Setter
     @ManyToOne
+    @JsonIgnore
     private Volume volume;
 
     @OneToMany
     @JoinColumn(name = "artigo_id")
     @Setter
+    @JsonIgnore
     private List<Autor> autores;
 
 

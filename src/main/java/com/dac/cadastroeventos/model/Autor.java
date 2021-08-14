@@ -1,5 +1,6 @@
 package com.dac.cadastroeventos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,11 +59,12 @@ public class Autor {
     @Pattern(regexp = "\\d{4}-\\d{4}-\\d{4}-\\d{4}")
     @Getter
     @Setter
-    private String OrcID;
+    private String orcid;
 
     @ManyToOne
     @Getter
     @Setter
+    @JsonIgnore
     private Artigo artigo;
 
 

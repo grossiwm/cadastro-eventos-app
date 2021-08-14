@@ -1,5 +1,8 @@
 package com.dac.cadastroeventos.controller;
 
+import com.dac.cadastroeventos.dto.autor.RegistrarAutorRequestDTO;
+import com.dac.cadastroeventos.dto.autor.RegistrarAutorResponseDTO;
+import com.dac.cadastroeventos.exception.ArtigoNaoEncontradoException;
 import com.dac.cadastroeventos.model.Autor;
 import com.dac.cadastroeventos.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +26,9 @@ public class AutorController {
     }
 
     @PostMapping("/registrar")
-    public ResponseEntity<Autor> registrarAutor(Autor autor) {
+    public ResponseEntity<RegistrarAutorResponseDTO> registrarAutor(@RequestBody RegistrarAutorRequestDTO dto) throws ArtigoNaoEncontradoException {
 
-        Autor novoAutor = autorService.criarAutor(autor);
+        RegistrarAutorResponseDTO novoAutor = autorService.criarAutorDTO(dto);
 
         return ResponseEntity.status(201).body(novoAutor);
     }
@@ -41,7 +44,7 @@ public class AutorController {
     }
 
     @PutMapping("/alterar")
-    public ResponseEntity<Autor> alterarAutor(Autor autor) {
+    public ResponseEntity<Autor> alterarAutor(@RequestBody Autor autor) {
 
         Long id = autor.getId();
 
