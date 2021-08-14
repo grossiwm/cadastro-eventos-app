@@ -22,6 +22,6 @@ public interface VolumeRepository extends JpaRepository<Volume, Long> {
 
     @Query(value = "select au.* from volume v" +
             " inner join artigo a on a.volume_id = v.id" +
-            " inner join autor au on au.artigo_id = a.id group by id", nativeQuery = true)
+            " inner join autor au on au.artigo_id = a.id group by au.id", nativeQuery = true)
     List<Map<Object, Object>> buscaAutoresDeVolume(@Param("id") Long volumeId);
 }
