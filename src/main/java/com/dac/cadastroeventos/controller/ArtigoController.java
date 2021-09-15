@@ -4,7 +4,9 @@ import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoRequestDTO;
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoResponseDTO;
 import com.dac.cadastroeventos.exception.VolumeNaoEncontradoException;
 import com.dac.cadastroeventos.model.Artigo;
+import com.dac.cadastroeventos.model.Autor;
 import com.dac.cadastroeventos.service.ArtigoService;
+import com.dac.cadastroeventos.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,18 @@ public class ArtigoController {
             return ResponseEntity.status(404).body(null);
 
         return ResponseEntity.status(200).body(artigoOp.get());
+    }
+
+    @GetMapping("/{id}/autores")
+    public ResponseEntity<List<Autor>> buscarAutores(@PathVariable Long id) {
+        Optional<Artigo> artigoOp = artigoService.buscarPorId(id);
+
+        if (artigoOp.isEmpty())
+            return ResponseEntity.status(404).body(null);
+
+        List<Autor> autores = artigoService.buscaAutoresDeArtigo(artigoOp.get());
+
+        return ResponseEntity.status(200).body(autores);
     }
 
     @PutMapping("/alterar")

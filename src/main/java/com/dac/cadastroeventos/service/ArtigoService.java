@@ -4,8 +4,10 @@ import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoRequestDTO;
 import com.dac.cadastroeventos.dto.artigo.RegistrarArtigoResponseDTO;
 import com.dac.cadastroeventos.exception.VolumeNaoEncontradoException;
 import com.dac.cadastroeventos.model.Artigo;
+import com.dac.cadastroeventos.model.Autor;
 import com.dac.cadastroeventos.model.Volume;
 import com.dac.cadastroeventos.repository.ArtigoRepository;
+import com.dac.cadastroeventos.repository.AutorRepository;
 import com.dac.cadastroeventos.repository.VolumeRepository;
 import com.dac.cadastroeventos.utils.ClassesUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class ArtigoService {
 
     @Autowired
     private VolumeRepository volumeRepository;
+
+    @Autowired
+    private AutorRepository autorRepository;
 
     @Autowired
     private ClassesUtils classesUtils;
@@ -63,5 +68,10 @@ public class ArtigoService {
 
     public void deletaArtigo(Artigo artigo) {
         artigoRepository.delete(artigo);
+    }
+
+    public List<Autor> buscaAutoresDeArtigo(Artigo artigo) {
+        List<Autor> autores = autorRepository.findAutorsByArtigo(artigo);
+        return autores;
     }
 }
